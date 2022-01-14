@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "724994910713",
+    "project_id": "liquify-e8ef4",
+    "storage_bucket": "liquify-e8ef4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724994910713:android:87346f2273cf8aeafbf528",
+        "android_client_info": {
+          "package_name": "com.joseph.demo_flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724994910713-eqjsspr9jf893lqfkind43sco1v2l41k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzaz0sLOBVUVs3mKqkblxLifMzZ9UmVKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724994910713-eqjsspr9jf893lqfkind43sco1v2l41k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
