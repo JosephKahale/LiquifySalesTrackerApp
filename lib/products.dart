@@ -1,10 +1,12 @@
 import 'package:demo_flutter_project/addProduct.dart';
+import 'package:demo_flutter_project/login_screen.dart';
 import 'package:demo_flutter_project/productPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 
 class ProductPage extends StatefulWidget {
@@ -50,17 +52,66 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                ),
+                child: null,
+              ),
+              ListTile(
+                title: const Text('Home'),
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductPage()));
+                  setState(() {
+
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Add Product'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Logout'),
+                onTap: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  const LoginPage()));
+                  setState(() {
+
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: yellow,
           bottomOpacity: 0.0,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            iconSize: 40,
-            tooltip: 'Menu',
-            onPressed: () {
-
-            },
+          leading: Builder(
+            builder: (context) => IconButton(
+              iconSize: 40,
+              tooltip: 'Menu',
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
           ),
           title: InkWell(
             onTap: () {
@@ -138,7 +189,7 @@ class _ProductPageState extends State<ProductPage> {
                   title: Container(
                     decoration: BoxDecoration(
                         color: boxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(11.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
                     margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -161,6 +212,7 @@ class _ProductPageState extends State<ProductPage> {
                                 ),//CHANGE AS SOON AS TITLE DATA CLASS BECOMES AVAIL
                                 ),
                               ),
+
                               Container(
                               margin: const EdgeInsets.only(left: 10),
                               child: Text(
@@ -172,12 +224,16 @@ class _ProductPageState extends State<ProductPage> {
                               ),//CHANGE AS SOON AS TITLE DATA CLASS BECOMES AVAIL
                             ),
                           ),
-                          const SizedBox(
-                            height: 100,
-                            child: Image(
-                              image: NetworkImage('https://images.stockx.com/images/NVIDIA-ASUS-TUF-Gaming-GeForce-RTX-3060-TI-8G-OC-Graphics-Card-TUF-RTX3060TI-O8G-GAMING.jpg?fit=fill&bg=FFFFFF&w=480&h=320&auto=compress&q=90&dpr=1&trim=color&updated_at=1622251579&fm=webp'),
+/*                          Container(
+                            margin: const EdgeInsets.only( bottom: 10),
+
+                            child: const SizedBox(
+                              height: 100,
+                              child: Image(
+                                image: NetworkImage('https://images.stockx.com/images/NVIDIA-ASUS-TUF-Gaming-GeForce-RTX-3060-TI-8G-OC-Graphics-Card-TUF-RTX3060TI-O8G-GAMING.jpg?fit=fill&bg=FFFFFF&w=480&h=320&auto=compress&q=90&dpr=1&trim=color&updated_at=1622251579&fm=webp'),
+                              ),
                             ),
-                          ),
+                          ),*/
                           ]
                           ),
                         ),
@@ -206,6 +262,29 @@ class _ProductPageState extends State<ProductPage> {
                                     fontFamily: 'Rockwell',
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                child: const Text(
+                                  'Profit:', style: TextStyle(
+                                  fontSize: 11.0,
+                                  fontFamily: 'Rockwell',
+                                  color: Colors.black,
+                                ),//CHANGE AS SOON AS TITLE DATA CLASS BECOMES AVAIL
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(),
+                                child: Text(
+                                  '${itemList[index]['itemProfit']}', //CHANGE AS SOON AS PRICE DATA CLASS BECOMES AVAIL
+
+                                  style: const TextStyle(
+                                    fontSize: 25.0,
+                                    fontFamily: 'Rockwell',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
                                   ),
                                 ),
                               )
@@ -240,6 +319,7 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ),
                               )
+
                             ],
                           ),
                         ),

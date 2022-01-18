@@ -154,32 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ]
                           ),
-                        Row(
-                            children:[
-                              Expanded(
-                                child: Container(
-                                  height: 40,
-                                  margin: const EdgeInsets.only(top: 0, left: 100, right: 100),
 
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100)
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text('forgot password? username?',
-                                      style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontFamily: 'Rockwell',
-                                        color: Colors.white,
-                                      ),),
-                                  ),
-
-                                ),
-                              ),
-                            ]
-                        ),
                         Row(
                             children:[
                               Expanded(

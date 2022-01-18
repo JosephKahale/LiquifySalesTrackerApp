@@ -108,7 +108,7 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
               ),
             ),
 
-            Container(
+            if(!itemList.isEmpty) Container(
               margin: EdgeInsets.only(left: 30, top: 30, right: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

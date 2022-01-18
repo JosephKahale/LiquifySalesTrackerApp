@@ -34,6 +34,8 @@ dependencies:
   firebase_database: ^9.0.4
   firebase_storage: ^10.2.5
   intl: ^0.17.0
+  collapsible_sidebar: ^2.0.1+2
+
 
 
 
