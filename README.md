@@ -1,6 +1,6 @@
-# demo_flutter_project
+# Liquify Sales Tracker App
 
-A new Flutter project.
+An app directed towards the ones who need a simple way to track their sales in a more intuitive way.
 
 ## Getting Started
 
