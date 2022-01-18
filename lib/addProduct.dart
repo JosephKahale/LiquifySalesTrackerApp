@@ -1,6 +1,8 @@
 import 'package:demo_flutter_project/products.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'specificProduct.dart';
 
 class addprod extends StatefulWidget {
   const addprod({Key? key}) : super(key: key);
@@ -10,9 +12,10 @@ class addprod extends StatefulWidget {
 }
 
 class _addprodState extends State<addprod> {
-
+  User? user = FirebaseAuth.instance.currentUser;
   var itemNameController = TextEditingController();
   var itemPriceController = TextEditingController();
+  var itemSalePriceController = TextEditingController();
   var itemQuantityController = TextEditingController();
 
   final red = const Color(0xffD24949);
@@ -79,10 +82,10 @@ class _addprodState extends State<addprod> {
             Column(
               children: [
                 Spacer(
-                  flex: 10,
+                  flex: 2,
                 ),
                     Expanded(
-                      flex: 90,
+                      flex: 98,
                         child: Center(
                           child: Column(
                             children: [
@@ -96,7 +99,7 @@ class _addprodState extends State<addprod> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: 10,left:30, right: 30, bottom: 10),
+                                margin: EdgeInsets.only(top: 5,left:30, right: 30, bottom: 10),
                                 child: TextField(
                                     style: const TextStyle(
                                       fontSize: 17,
@@ -151,6 +154,31 @@ class _addprodState extends State<addprod> {
                                       fontSize: 17,
                                       fontFamily: 'Rockwell',
                                     ),
+                                    controller: itemSalePriceController,
+                                    keyboardType: TextInputType.number,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white.withOpacity(0.7),
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        borderSide: const BorderSide(color: Colors.deepOrangeAccent, width: 0.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        borderSide: const BorderSide(color: Colors.deepOrangeAccent, width: 2.0),
+                                      ),
+                                      labelText: '\$ item sale price...',
+                                    )
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10,left:30, right: 30, bottom: 10),
+                                child: TextField(
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontFamily: 'Rockwell',
+                                    ),
                                     controller: itemQuantityController,
                                     keyboardType: TextInputType.number,
                                     obscureText: false,
@@ -182,17 +210,19 @@ class _addprodState extends State<addprod> {
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(12)
                                           ),
-
                                         ),
                                         onPressed: () {
                                           print(itemPriceController.text);
                                           var timeStamp = new DateTime.now().millisecondsSinceEpoch;
-                                          FirebaseDatabase.instance.ref().child("itemCollection/item" + timeStamp.toString()).set(
+                                          var uid = user?.uid;
+                                          print(user?.uid);
+                                          FirebaseDatabase.instance.ref().child("itemCollection/" + uid.toString() + "/" + timeStamp.toString()).set(
                                             {
                                               "itemName" : itemNameController.text,
                                               "itemPrice" : itemPriceController.text,
+                                              "itemSalePrice" : itemSalePriceController.text,
                                               "itemQuantity" : itemQuantityController.text,
-                                              }
+                                            }
                                           ).then((value) {
                                             print("Success");
                                           }).catchError((error){

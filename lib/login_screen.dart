@@ -132,6 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                                           email: emailController.text, password: passwordController.text)
                                           .then((value) {
                                         print("Login Successfully");
+                                        User? user = FirebaseAuth.instance.currentUser;
+                                        print(user?.uid);
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) => ProductPage()),

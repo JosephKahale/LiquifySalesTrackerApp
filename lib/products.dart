@@ -1,7 +1,11 @@
 import 'package:demo_flutter_project/addProduct.dart';
 import 'package:demo_flutter_project/productPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
+
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -11,19 +15,32 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-
+  User? user = FirebaseAuth.instance.currentUser;
   var itemList = [];
 
   _ProductPageState() {
-    FirebaseDatabase.instance.ref().child("itemCollection").once()
+    var uid = user?.uid;
+
+    FirebaseDatabase.instance.ref().child("itemCollection/" + uid.toString()).once()
         .then((dataSnapShot){
+          final items = Map<String, dynamic>.from(dataSnapShot.snapshot.value as Map<dynamic, dynamic>);
           print("Success Loaded");
-          print(dataSnapShot);
+          print(dataSnapShot.snapshot.key);
+          print(dataSnapShot.snapshot.value);
+          var tmpList = [];
+          items.forEach((k, v){
+            print(v);
+            tmpList.add(v);
+          });
+          itemList = tmpList;
+          setState(() {
+
+          });
     }).catchError((error){
       print("Failed Load" + error.toString());
     });
-    
   }
+  final usFormat = NumberFormat.currency(locale: 'en_US');
   final red = const Color(0xffD24949);
   final orange = const Color(0xffD26E4A);
   final yellow = const Color(0xffD2C54C);
@@ -89,9 +106,27 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
             ),
+              if(itemList.isEmpty) Center(
+                child:
+                  Container(
+                    margin: const EdgeInsets.only(),
+                    child: const Text(
+
+                      'Please start by adding an item to track', style: TextStyle(
+                      fontSize: 28.0,
+
+                      fontFamily: 'Rockwell',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+              ),
         Container(
-          margin: const EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 10),
             child: ListView.builder(
+              itemCount: itemList.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () {
@@ -101,8 +136,10 @@ class _ProductPageState extends State<ProductPage> {
                         MaterialPageRoute(builder: (context) => const SpecificProductListing()));
                   },
                   title: Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(11.0))),
+                    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,8 +163,8 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text(
-                                'Hello', style: TextStyle(
+                              child: Text(
+                                '${itemList[index]['itemName']}', style: const TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: 'Rockwell',
                                 fontWeight: FontWeight.bold,
@@ -163,9 +200,9 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(),
-                                child: const Text(
-                                  '\$15,000', //CHANGE AS SOON AS PRICE DATA CLASS BECOMES AVAIL
-                                  style: TextStyle(
+                                child: Text(
+                                  '${itemList[index]['itemPrice']}', //CHANGE AS SOON AS PRICE DATA CLASS BECOMES AVAIL
+                                  style: const TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'Rockwell',
                                     fontWeight: FontWeight.bold,
