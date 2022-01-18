@@ -45,6 +45,7 @@ class _ProductPageState extends State<ProductPage> {
   final orange = const Color(0xffD26E4A);
   final yellow = const Color(0xffD2C54C);
   final fieldButton = const Color(0xE6FFFFFF);
+  final boxColor = const Color(0xB3FFFFFF);
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +112,8 @@ class _ProductPageState extends State<ProductPage> {
                   Container(
                     margin: const EdgeInsets.only(),
                     child: const Text(
-
                       'Please start by adding an item to track', style: TextStyle(
                       fontSize: 28.0,
-
                       fontFamily: 'Rockwell',
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -128,16 +127,17 @@ class _ProductPageState extends State<ProductPage> {
             child: ListView.builder(
               itemCount: itemList.length,
               itemBuilder: (BuildContext context, int index) {
+                index;
                 return ListTile(
                   onTap: () {
                     print(index.toString());
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SpecificProductListing()));
+                        MaterialPageRoute(builder: (context) => SpecificProductListing(index: index,)));
                   },
                   title: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
+                    decoration: BoxDecoration(
+                        color: boxColor,
                         borderRadius: BorderRadius.all(Radius.circular(11.0))),
                     margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
                     child: Row(
@@ -176,7 +176,6 @@ class _ProductPageState extends State<ProductPage> {
                             height: 100,
                             child: Image(
                               image: NetworkImage('https://images.stockx.com/images/NVIDIA-ASUS-TUF-Gaming-GeForce-RTX-3060-TI-8G-OC-Graphics-Card-TUF-RTX3060TI-O8G-GAMING.jpg?fit=fill&bg=FFFFFF&w=480&h=320&auto=compress&q=90&dpr=1&trim=color&updated_at=1622251579&fm=webp'),
-
                             ),
                           ),
                           ]
@@ -231,9 +230,9 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(),
-                                child: const Text(
-                                  '\$17,000', //CHANGE AS SOON AS PRICE DATA CLASS BECOMES AVAIL
-                                  style: TextStyle(
+                                child: Text(
+                                  '${itemList[index]['itemSalePrice']}', //CHANGE AS SOON AS PRICE DATA CLASS BECOMES AVAIL
+                                  style: const TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'Rockwell',
                                     fontWeight: FontWeight.bold,

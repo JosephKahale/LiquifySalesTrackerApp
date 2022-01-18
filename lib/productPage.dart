@@ -1,15 +1,47 @@
 import 'package:demo_flutter_project/addProduct.dart';
+import 'package:demo_flutter_project/productPage.dart';
 import 'package:demo_flutter_project/products.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 
 class SpecificProductListing extends StatefulWidget {
-  const SpecificProductListing({Key? key}) : super(key: key);
+  final int index;
+
+  SpecificProductListing({Key? key, required this.index}) : super(key: key);
 
   @override
   _SpecificProductListingState createState() => _SpecificProductListingState();
 }
 
 class _SpecificProductListingState extends State<SpecificProductListing> {
+
+  User? user = FirebaseAuth.instance.currentUser;
+  var itemList = [];
+  _SpecificProductListingState() {
+    var uid = user?.uid;
+
+    FirebaseDatabase.instance.ref().child("itemCollection/" + uid.toString()).once()
+        .then((dataSnapShot){
+      final items = Map<String, dynamic>.from(dataSnapShot.snapshot.value as Map<dynamic, dynamic>);
+      print("Success Loaded");
+      print(dataSnapShot.snapshot.key);
+      print(dataSnapShot.snapshot.value);
+      var tmpList = [];
+      items.forEach((k, v){
+        print(v);
+        tmpList.add(v);
+      });
+      itemList = tmpList;
+      setState(() {
+
+      });
+    }).catchError((error){
+      print("Failed Load" + error.toString());
+    });
+  }
 
   final red = const Color(0xffD24949);
   final orange = const Color(0xffD26E4A);
@@ -107,10 +139,10 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                     ),
                   ),
                   Row(
-                    children: const [
+                    children:  [
                       Expanded(
-                        child: Text("Yeezy Boost 350 V2 Light",
-                          style: TextStyle(
+                        child: Text("${itemList[widget.index]['itemName']}",
+                          style: const TextStyle(
                             fontSize: 28.0,
                             fontFamily: 'Rockwell',
                             fontWeight: FontWeight.bold,
@@ -145,10 +177,10 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                     ],
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Expanded(
-                        child: Text("\$599.99",
-                          style: TextStyle(
+                        child: Text("${itemList[widget.index]['itemPrice']}",
+                          style: const TextStyle(
                             fontSize: 32.0,
                             fontFamily: 'Rockwell',
                             fontWeight: FontWeight.bold,
@@ -157,8 +189,8 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                         ),
                       ),
                       Expanded(
-                        child: Text("\$599.99",
-                          style: TextStyle(
+                        child: Text("${itemList[widget.index]['itemSalePrice']}",
+                          style: const TextStyle(
                             fontSize: 32.0,
                             fontFamily: 'Rockwell',
                             fontWeight: FontWeight.bold,
@@ -177,10 +209,10 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                     ),
                   ),
                   Row(
-                    children: const [
+                    children:  [
                       Expanded(
-                        child: Text("2",
-                          style: TextStyle(
+                        child: Text("${itemList[widget.index]['itemQuantity']}",
+                          style: const TextStyle(
                             fontSize: 32.0,
                             fontFamily: 'Rockwell',
                             fontWeight: FontWeight.bold,
