@@ -1,6 +1,6 @@
-import 'package:demo_flutter_project/addProduct.dart';
-import 'package:demo_flutter_project/productPage.dart';
-import 'package:demo_flutter_project/products.dart';
+import 'package:Liquify/addProduct.dart';
+import 'package:Liquify/productPage.dart';
+import 'package:Liquify/products.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';

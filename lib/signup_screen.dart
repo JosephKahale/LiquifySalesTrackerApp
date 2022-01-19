@@ -1,4 +1,4 @@
-import 'package:demo_flutter_project/products.dart';
+import 'package:Liquify/products.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class SignupPage extends StatefulWidget {

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.joseph.demo_flutter_project">
    <application
-        android:label="demo_flutter_project"
+        android:label="Liquify"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
