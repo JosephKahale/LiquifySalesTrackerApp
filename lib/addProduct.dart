@@ -286,7 +286,7 @@ class _addprodState extends State<addprod> {
                                     fontFamily: 'Rockwell',
                                   ),
                                   controller: itemDescController,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     fillColor: Colors.white.withOpacity(0.7),
