@@ -66,28 +66,29 @@ class _ProductPageState extends State<ProductPage> {
               ListTile(
                 title: const Text('Home'),
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ProductPage()));
-                  setState(() {
-
-                  });
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: const Text('Add Product'),
                 onTap: () {
-                  // Update the state of the app.
-                  // ...
                   Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const addprod()));
+/*                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const addprod()));*/
+ /*                 setState(() {
+
+                  });*/
+                  //Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: const Text('Logout'),
                 onTap: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
-
 
                   Navigator.push(
                       context,

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 
+import 'login_screen.dart';
+
 class SpecificProductListing extends StatefulWidget {
   final int index;
 
@@ -50,17 +52,64 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                ),
+                child: null,
+              ),
+              ListTile(
+                title: const Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductPage()));
+                },
+              ),
+              ListTile(
+                title: const Text('Add Product'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const addprod()));
+                },
+              ),
+              ListTile(
+                title: const Text('Logout'),
+                onTap: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  const LoginPage()));
+                  setState(() {
+
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
       appBar: AppBar(
         backgroundColor: yellow,
         bottomOpacity: 0.0,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          iconSize: 40,
-          tooltip: 'Menu',
-          onPressed: () {
-
-          },
+        leading: Builder(
+          builder: (context) => IconButton(
+            iconSize: 40,
+            tooltip: 'Menu',
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
         title: InkWell(
           onTap: () {
@@ -208,6 +257,7 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                       color: Colors.white,
                     ),
                   ),
+
                   Row(
                     children:  [
                       Expanded(
@@ -222,7 +272,28 @@ class _SpecificProductListingState extends State<SpecificProductListing> {
                       ),
                     ],
                   ),
-
+                  const Text("Description:",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Rockwell',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Row(
+                    children:  [
+                      Expanded(
+                        child: Text("${itemList[widget.index]['itemDescription']}",
+                          style: const TextStyle(
+                            fontSize: 32.0,
+                            fontFamily: 'Rockwell',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               )
             ),

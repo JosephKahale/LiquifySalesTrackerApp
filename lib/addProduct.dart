@@ -8,12 +8,12 @@ class addprod extends StatefulWidget {
 
   const addprod({Key? key}) : super(key: key);
 
-
   @override
   _addprodState createState() => _addprodState();
 }
 
 class _addprodState extends State<addprod> {
+
   User? user = FirebaseAuth.instance.currentUser;
   var itemNameController = TextEditingController();
   var itemPriceController = TextEditingController();
@@ -45,13 +45,10 @@ class _addprodState extends State<addprod> {
             ListTile(
               title: const Text('Home'),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pop(context);
+                Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ProductPage()));
-                setState(() {
-
-                });
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -342,13 +339,14 @@ class _addprodState extends State<addprod> {
                                       }
                                   ).then((value) {
                                     print("Success");
+                                    Navigator.pop(context);
                                   }).catchError((error){
                                     print("Error" + error.toString());
                                   });
-                                  Navigator.push(
+/*                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => ProductPage()),
-                                  );
+                                  );*/
                                   }
                                 },
                                 child: const Text('submit',
